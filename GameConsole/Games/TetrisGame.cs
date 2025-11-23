@@ -95,6 +95,7 @@ namespace GameConsole.Games
 					// Game Over Check
 					if (!CanMove(currentShape, currentX, currentY))
 					{
+						ShowEndMessage();
 						return;
 					}
 				}
@@ -102,7 +103,51 @@ namespace GameConsole.Games
 				DrawBoard(currentShape, currentX, currentY, Score);
 				Thread.Sleep(150); // Speed
 			}
+			
 		}
+
+		private void ShowEndMessage()
+		{
+			Console.Clear();
+			Console.Write($"""
+
+		     ██████╗  █████╗ ██    ██╗█████╗
+		    ██╔════╝ ██╔══██╗███  ███║██╔══╝
+		    ██║  ███╗███████║██╔██═██║█████╗
+		    ██║   ██║██╔══██║██║   ██║██╔══╝
+		    ╚██████╔╝██║  ██║██║   ██║█████╗
+		     ╚═════╝ ╚═╝  ╚═╝╚═╝   ╚═╝╚════╝
+		      ██████╗██╗  ██╗█████╗█████╗
+		      ██  ██║██║  ██║██╔══╝██╔═██╗
+		      ██  ██║██║  ██║█████╗█████╔╝
+		      ██  ██║╚██╗██╔╝██╔══╝██╔═██╗
+		      ██████║ ╚███╔╝ █████╗██║ ██║
+		      ╚═════╝  ╚══╝  ╚════╝╚═╝ ╚═╝
+
+		    Final Score: {Score}
+
+		    
+		    [Escape] close game
+		""");
+			Console.CursorVisible = false;
+			bool gameOverScreen = true;
+			bool closeRequested = false;
+			while (!closeRequested && gameOverScreen)
+			{
+				Console.CursorVisible = false;
+				
+				switch (Console.ReadKey(true).Key)
+				{
+					case ConsoleKey.Enter: gameOverScreen = false; Console.CursorVisible = true; return;
+					case ConsoleKey.Escape: closeRequested = true; gameOverScreen = false; Console.CursorVisible = true; return;
+				}
+				
+			}
+		
+		}
+		
+
+		
 
 		private void ShowInstructions()
 		{

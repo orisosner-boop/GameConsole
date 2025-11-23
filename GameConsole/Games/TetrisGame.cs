@@ -9,8 +9,11 @@ namespace GameConsole.Games
 {
 	public class TetrisGame : IGamePlay
 	{
-		public string Name { get; set; }= "Tetris";
-		public int Score { get; set; }
+		public string Name { get; set; } = "Tetris";
+		public int Score
+		{
+			get; set;
+		}
 		// Classic Tetris settings
 		private const int BoardWidth = 10;
 		private const int BoardHeight = 20;
@@ -31,11 +34,11 @@ namespace GameConsole.Games
 		public void Play()
 		{
 			ShowInstructions();
-			Console.Clear();
 
+			Console.Clear();
 			Console.CursorVisible = false;
 			Board = new int[BoardHeight, BoardWidth]; // Reset board
-			
+
 			Random random = new Random();
 
 			int[,] currentShape = Shapes[random.Next(Shapes.Length)];
@@ -103,6 +106,7 @@ namespace GameConsole.Games
 
 		private void ShowInstructions()
 		{
+			Console.OutputEncoding = Encoding.UTF8;
 			Console.Clear();
 			Console.WriteLine("""
 

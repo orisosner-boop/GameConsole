@@ -1,33 +1,34 @@
-﻿using System;
-namespace GameConsole.Data
+﻿using GameConsole.Models;
+using System;
+namespace GameConsole.Data {
 
-internal class UserDb
-{
-    private static List<User> users;
-
-    public static User RegisterUser(string name, string uName, string password)
+    internal class UserDb
     {
-        if (users.Any(u => u.Username == uName))
+        private static List<User> users;
+
+        public static User RegisterUser(string name, string uName, string password)
         {
-            throw new InvalidOperationException("the user exists already");
+            if (users.Any(u => u.UserName == uName))
+            {
+                throw new InvalidOperationException("the user exists already");
+            }
+            User newus = new User(name, uName, password);
+            users.Add(newus);
+            return newus;
         }
-        User newus = new User(name, uName, password);
-        users.Add(newus);
-        return newus;
-    }
-    public static User Login(string name, string password)
-    {
-        return users.FirstOrDefault(u => u.Username == name && u.Password == password);
-    }
-    public static void Update(User u)
-    {
-        if (users.Any(user => user == u))
+        public static User Login(string name, string password)
         {
-            users.Where(user => user == u).FirstOrDefault().Password = null;
-            users.Where(user => user == u).FirstOrDefault().Name = null;
+            return users.FirstOrDefault(u => u.UserName == name && u.Password == password);
         }
-        else
-            throw new InvalidOperationException("no such user exists");
+        public static void Update(User u)
+        {
+            if (users.Any(user => user == u))
+            {
+                users.Where(user => user == u).FirstOrDefault().Password = null;
+                users.Where(user => user == u).FirstOrDefault().Name = null;
+            }
+            else
+                throw new InvalidOperationException("no such user exists");
+        }
     }
-
 }
